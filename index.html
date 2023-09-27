@@ -1,0 +1,1024 @@
+
+<!DOCTYPE html>
+<html ng-app="netGearApp">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <meta charset="utf-8">
+    <meta property="og:image" content="/images/bootstrap-social.png" />
+
+    <link rel="stylesheet" href="/support/support.css">
+    <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap-social.css">
+    <link rel="stylesheet" href="/lib/css/fileinput.min.css" media="all" type="text/css" />
+    <link rel="stylesheet" href="/lib/css/custom.css">
+    <!-- MetisMenu CSS -->
+    <link href="/lib/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Timeline CSS -->
+    <link href="/lib/css/timeline.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="/lib/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Morris Charts CSS -->
+    <!-- <link href="lib/bower_components/morrisjs/morris.css" rel="stylesheet"> -->
+
+    <link rel="stylesheet" href="/lib/css/main.css">
+
+    <title>{{ "Portal Management" | translate}}</title>
+    <script>
+        function getUrlVars() {
+            var vars = {};
+            var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+                vars[key] = value;
+            });
+            return vars;
+        }
+
+        function getUrlParam(parameter, defaultvalue){
+            var urlparameter = defaultvalue;
+            if(window.location.href.indexOf(parameter) > -1){
+                urlparameter = getUrlVars()[parameter];
+            }
+            return urlparameter;
+        }
+
+        window.document.domain=getUrlParam("document.domain","insight.netgear.com");
+    </script>
+    <script src="/lib/jquery/jquery.min.js"></script>
+    <script src="/lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/lib/jquery/jquery.min.js"></script>
+    <script src="/lib/jquery-cookie/jquery.cookie.js"></script>
+    <script src="/lib/angular/angular.min.js"></script>
+    <script src="/lib/angular-route/angular-route.min.js"></script>
+    <script src="/lib/angular-translate/angular-translate-2.10.0.min.js"></script>
+    <script src="/lib/angular-translate/angular-translate-loader-static-files.min.js"></script>
+    <script src="/lib/angular/sortable.js"></script>
+    <!-- <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css"></script> -->
+    <script src="/lib/jquery_ui/jquery-ui.min.js"></script>
+    <script src="/lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/lib/bower_components/raphael/raphael-min.js"></script>
+    <script src="/lib/oauth/oauth.js"></script>
+    <script src="/lib/angular-md5/angular-md5.min.js"></script>
+    <script src="/lib/loader/spin.min.js"></script>
+    <script src="/lib/facebook/angular-easyfb.js"></script>
+    <script src="/js/loader.js"></script>
+    <script src="/support/support.js"></script>
+    <script src="/js/netgearApp.js"></script>
+    <!-- <script src="js/iframeApp.js"></script> -->
+    <script src="/js/netgearMasterService.js"></script>
+    <script src="/js/netgearController.js"></script>
+    <script src="/js/countries.js" ></script>
+    <script src="/lib/fileInput/fileinput.min.js" async></script>
+
+
+</head>
+
+<body ng-controller="mainNetGearController">
+<div class="loadingMask" id="loadingMask" style="visibility: hidden;"></div>
+<div id="supportDiv">
+    <div id="alert" class="alert hide" role="alert"></div>
+</div>
+<div id="ieNotSupported" style="display: none;">
+    <h3>{{'Internet Explorer is not supported for Instant Captive Portal configuration. You can use Edge, Firefox, Chrome, or Safari.' | translate }}</h3>
+</div>
+<div class="container" style="padding-left: 0px;margin-left:0px;">
+<div class="port-wrapper swichPortPad25">
+<div class="failSafeBlock disabledAll1">
+<div class="statidetails">
+    <div class="row">
+        <div class="col-md-4 col-sm-8" style="padding-bottom:15px;">
+            <span style="font-style: italic;font-weight: bold;">{{'Fields marked with * are required' | translate }}</span>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-8 col-sm-8">
+            <div class="OnOffSetting">
+                <span class="inputFieldHeading" >{{ 'Portal Name' | translate }}*</span>
+                <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="{{'Provide a portal name to uniquely identify this portal' | translate }}"></span>
+                <input type="text" placeholder="{{'Enter Portal Name' | translate}}" ng-model="record.text.name" class="form-control inputTextField">
+            </div>
+
+            <div class="OnOffSetting">
+                <span class="inputFieldHeading">{{ 'Welcome Headline' | translate }}*</span>
+                <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="{{ 'Visitors will see this welcome headline on captive portal when they first connect to the Internet' | translate }}"></span>
+                <input type="text" placeholder="{{ 'Visitors will see this text when they first connect' | translate }}" ng-model="record.text.welcomeHeadline" class="form-control inputTextField">
+            </div>
+            <div class="OnOffSetting mb-0">
+                <span class="inputFieldHeading">{{ 'Welcome Message' | translate }}</span>
+                <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="{{ 'Visitors will see this message on captive portal when they first connect to the Internet' | translate }}"></span>
+                <input type="text" placeholder="{{ 'Visitors will see this message when they first connect' | translate }}" ng-model="record.text.welcomeText" class="form-control inputTextField">
+            </div>
+            <div class="OnOffSetting mb-0">
+                <div ng-show="isNewPortal=='true'" style="font-weight: bold;color:red" class="padding-5">{{ 'Please review EULA with your legal' | translate }}</div>
+
+                <button style="margin-left:0px;width:auto;" class="btn btn-default chooseFileBtn" ng-click="showEulaModal()">{{ 'EULA & Marketing Opt-In' | translate}}</button>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-sm-4"></div>
+    </div>
+</div>
+<div class="PoeEtherBlock"></div>
+<div class="statidetails">
+    <div class="row">
+        <div class="col-md-10 col-sm-12">
+            <div>
+                <h5 class="inputFieldHeading">{{ 'Add Captive Portal Logo' | translate}}*</h5>
+                <div id="logoDiv" class="leftDiv  noBorder">
+                    <canvas id="logoCanvas" width="75" height="75"></canvas>
+                </div>
+
+                <div class="col-md-3 col-xs-4 smart-form ">
+                    <select class="form-control inputTextField" name="mySelect1" id="mySelect1" ng-options="image.name for image in logoImageList | orderBy:'name' track by image.id"
+                            ng-model="record.images.logo" ng-change="selectImageFunc('logo')">
+                        <option value="">{{'Select' | translate}}</option>
+                    </select>
+                </div>
+                <button class="btn btn-sm chooseFileBtn" id="chooseFileBtn" ng-click="showImageModal('logo')"><i class="fa fa-upload"></i>
+                    &nbsp {{'Choose a file' | translate}}...</button>
+            </div>
+        </div>
+    </div>
+    <div class="row OnOffSetting">
+        <div class="">
+            <a ng-show="record.images.logo !== undefined &amp;&amp; record.images.logo !== null &amp;&amp; record.images.logo !==''"
+               ng-click="showDeleteImageWarningModal('logo')" class=""><span style="padding-left:27px;color:red">{{"Delete" | translate}}</span></a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10 col-sm-12">
+            <div>
+                <h5 class="inputFieldHeading">{{"Add Desktop Background Image" | translate}}*</h5>
+                <div id="imgDiv" class="leftDiv  noBorder">
+                    <canvas id="desktopBackgroundCanvas" width="75" height="75"></canvas>
+                </div>
+
+                <div class="col-md-3 col-xs-4 smart-form">
+                    <select class="form-control inputTextField" name="mySelectBg" id="mySelectBg"
+                            ng-options="image.name for image in backgroundImageList | orderBy:'name' track by image.id"
+                            ng-model="record.images.background" ng-change="selectImageFunc('background')">
+                        <option value="">{{"Select" | translate}}</option>
+                    </select>
+                </div>
+                <button class="btn btn-sm chooseFileBtn" id="chooseFileBtn" ng-click="showImageModal('background')"><i class="fa fa-upload"></i>
+                    &nbsp {{"Choose a file" | translate}}...</button>
+
+                <div>
+                    <div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row OnOffSetting">
+        <div class="">
+            <a ng-show="record.images.background !== undefined &amp;&amp; record.images.background !== null &amp;&amp; record.images.background !==''"
+               ng-click="showDeleteImageWarningModal('background')" class=""><span style="padding-left:27px;color:red">{{"Delete" | translate}}</span></a>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10 col-sm-12">
+            <div>
+                <h5 class="inputFieldHeading">{{"Add Mobile Background Image" | translate}}</h5>
+                <div id="imgDiv" class="leftDiv  noBorder">
+                    <canvas id="mobileBackgroundCanvas" width="75" height="75"></canvas>
+                </div>
+
+                <div class="col-md-3 col-xs-4 smart-form">
+                    <select class="form-control inputTextField" name="mySelectBg" id="mySelectMobileBg" ng-options="image.name for image in mobileBackgroundImageList | orderBy:'name' track by image.id"
+                            ng-model="record.images.mobileBackground" ng-change="selectImageFunc('mobile-background')">
+                        <option value="" class="">{{"Select" | translate}}</option>
+                    </select>
+                </div>
+                <button class="btn btn-sm chooseFileBtn" id="chooseFileBtn" ng-click="showImageModal('mobile-background')"><i class="fa fa-upload"></i>
+                    &nbsp {{"Choose a file" | translate}}...</button>
+
+            </div>
+        </div>
+    </div>
+    <div class="row OnOffSetting">
+        <div class="">
+
+            <a ng-show="record.images.mobileBackground !== undefined &amp;&amp; record.images.mobileBackground !== null &amp;&amp; record.images.mobileBackground !==''"
+               ng-click="showDeleteImageWarningModal('mobile-background')" class=""><span style="padding-left:27px;color:red">{{"Delete" | translate}}</span></a>
+
+        </div>
+    </div>
+
+</div>
+<div class="statidetails">
+    <div class="row">
+        <div class="col-md-8 col-sm-8">
+            <div class="OnOffSetting">
+                <span class="inputFieldHeading">{{'Landing Page URL' | translate}}*</span>
+                <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="{{'The URL where users should land after successful authentication' | translate}}"></span>
+                <input type="url" pattern="https?://.+" placeholder="{{'Landing page URL. Eg: https://www.google.com/' | translate}}" ng-model="newTier.landingPage" class="form-control inputTextField">
+            </div>
+
+            <div class="OnOffSetting">
+                <span class="inputFieldHeading">{{'Session Duration' | translate}}*</span>
+                <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="{{'Configures the internet session length of the users' | translate}}"></span>
+                <select class="form-control inputTextField" ng-options="opt.name for opt in sessionList" ng-model="newTier.session">
+                    <option value="">{{'Select Value' | translate}}</option>
+                </select>
+            </div>
+
+        </div>
+        <div class="col-md-4 col-sm-4"></div>
+    </div>
+    <div class="myDevicesTable">
+        <div class="TableHeader headerindex1">
+            <h3>{{'Captive Portal Steps' | translate}}</h3>
+            <div class="locationBarIcons">
+                <div class="addIcon" data-toggle="modal" ng-click="addTierSteps()">
+                    <span class="icon-add-2">&nbsp;</span>
+                </div>
+            </div>
+        </div>
+        <div class="tableBoxBlock">
+            <p class="font-smallThirteen ml-20 mt-20 mb-0">
+                {{"Create WiFi user's on boarding journey by adding one or more steps. The user must go through all of these steps before accessing the internet." | translate}}
+            </p>
+            <div class="table-responsive PaddingBtNone">
+                <table class="table table-hover mac-acl-table m-0 TblHeaderBgBlock dataTable">
+                    <thead ng-show="newTier.steps.length !== 0">
+                    <tr>
+                        <th>{{'Step Type' | translate}}</th>
+                        <th>{{'Details' | translate}}</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody ui-sortable="sortableOptions"  ng:model="newTier.steps">
+                    <tr  ng-repeat="tierStep in newTier.steps" style="cursor: move;">
+                        <td><span class="DarkColor">{{getStepName(tierStep.type) | translate}}</span></td>
+                        <td>{{ tierStep.details | translate}}</td>
+                        <td>
+                            <p class="actionIcons m-0" style="cursor: pointer">
+                                <i ><img ng-click="editStep(tierStep)" src="/images/edit.png"></i>
+                                <i ng-click="deleteStep(tierStep.id)"><img src="/images/del.png"></i>
+                            </p>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="padding-top:10%; text-align:right">
+        <div class="col-md-10 col-sm-12">
+
+
+
+            <div class="ButtonBlockPop small-buttons ml-10 d-inline">
+                <button class="btn btn-sm chooseFileBtn" ng-disabled="record.images.logo === null || record.images.logo === undefined || record.images.logo === '' || record.images.background === null || record.images.background === undefined || record.images.background === ''"
+                        class="btn btn-default chooseFileBtn" ng-click="showPreviewPortalModalV2('desktop')">
+                    {{ "Desktop Preview" | translate }} </button>
+            </div>
+
+
+            <div class="ButtonBlockPop small-buttons ml-10 d-inline" style="padding-left:5%">
+                <button class="btn btn-sm chooseFileBtn" ng-disabled="record.images.logo === null ||
+             record.images.logo === undefined ||
+             record.images.logo === '' || (
+             (record.images.background === null ||
+             record.images.background === undefined ||
+             record.images.background === '') &&
+             (record.images.mobileBackground === null ||
+             record.images.mobileBackground === undefined ||
+             record.images.mobileBackground === ''))"
+                        class="btn btn-default chooseFileBtn" ng-click="showPreviewPortalModalV2('mobile')">
+                    {{ "Mobile Preview" | translate }}</button>
+            </div>
+
+
+
+
+
+
+
+        </div>
+    </div>
+</div>
+</div>
+</div>
+<div style="display:none" class="stati-footer text-right actionBtnRow">
+    <button type="button" class="btn ipbtn cancelBtn" ng-click="cancelForm();">Cancel</button>
+    <button type="button" id="saveButton" class="btn saveBtn" ng-click="processForm();">Save</button>
+</div>
+
+<!-- Add Tier Step Modal -->
+<div class="modal fade custom-modal-padding modal-lg" id="addStepModal" tabindex="-1" aria-labelledby="#addStepModalLabel"
+     aria-hidden="true" style="display: none;" role="dialog" data-backdrop="static" data-keyboard="false">
+<div class="modal-dialog MediumDiolog">
+<div class="modal-content">
+<div class="modal-header">
+    <button type="button" class="close" ng-click="cancelStep();" data-dismiss="modal">
+        <img src="/images/whiteCross.png" />
+    </button>
+    <h4 class="modal-title">{{'Captive Portal Step' | translate}}</h4>
+</div>
+<div class="modal-body">
+<div>
+    <div style="color: red;">{{modalStepErrorMessage}}</div>
+</div>
+<div class="smart-form">
+<div class="OnOffSetting">
+    <h5>{{ 'Step Type' | translate }} *</h5>
+    <select ng-disabled="newStep.id > 0"
+            class="form-control inputTextField"
+            ng-options="option.name for option in stepTypeList | orderBy:'name'"
+            ng-model="newStep.type" ng-change="selectStepFunc();">
+        <option value="">{{ "Please select an option" | translate }}</option>
+    </select>
+</div>
+<div class="OnOffSetting" style="display:none">
+    <span class="">{{ 'Step Description' | translate }}</span>
+    <p class="font-smallThirteen colorGray">{{ '1-32 Characters' | translate }}</p>
+    <input type="text" maxlength="32" placeholder="Enter Step Description" class="form-control inputTextField" ng-model="newStep.details">
+</div>
+<div class="OnOffSetting" ng-show="newStep.type.value ==='GOOGLE_SURVEY'">
+    <div>{{ 'Google Survey URL' | translate }} &nbsp;&nbsp;<a
+            style="text-decoration: underline" target="_blank" href={{googleSurveyHelpUrl}}><i class="fa fa-question-circle" aria-hidden="true"></i></a></div>
+    <input class="form-control inputTextField" ng-model="newStep.path[0]"/>
+</div>
+<div ng-show="newStep.type.value ==='LOGIN'" class="OnOffSetting mb-0">
+    <h5>{{"Select Login Modes" | translate}}*</h5>
+    <div class="row">
+        <div class="col-md-4 mb-20">
+            <div class="checkboxBlock">
+                <input type="checkbox"  name="emailReports"
+                       ng-true-value="{{loginList[0]}}" ng-false-value="" ng-model="newStep.path[0]">
+                <label class="checkbox ipacl">
+                    <p>{{loginList[0] | translate}}</p>
+                </label>
+            </div>
+        </div>
+        <div class="col-md-4 mb-20">
+            <div class="checkboxBlock">
+                <input type="checkbox"  name="emailReports"
+                       ng-true-value="{{loginList[1]}}" ng-false-value="" ng-model="newStep.path[1]">
+                <label class="checkbox ipacl">
+                    <p>{{loginList[1] | translate}}</p>
+                </label>
+            </div>
+        </div>
+        <!-- <div class="col-md-4 mb-20">
+          <div class="checkboxBlock">
+            <input type="checkbox"  name="emailReports"
+            ng-true-value="{{loginList[2]}}" ng-false-value="" ng-model="newStep.path[2]">
+            <label class="checkbox ipacl">
+              <p>{{loginList[2]}}</p>
+            </label>
+          </div>
+        </div> -->
+
+        <div class="col-md-4 mb-20">
+            <div class="checkboxBlock">
+                <input type="checkbox"  name="emailReports"
+                       ng-true-value="{{loginList[3]}}" ng-false-value="" ng-model="newStep.path[3]">
+                <label class="checkbox ipacl">
+                    <p>{{loginList[3] | translate}}</p>
+                </label>
+            </div>
+        </div>
+        <div class="col-md-4 mb-20">
+            <div class="checkboxBlock">
+                <input type="checkbox"  name="emailReports"
+                       ng-true-value="{{loginList[2]}}" ng-false-value="" ng-model="newStep.path[2]">
+                <label class="checkbox ipacl">
+                    <p>{{loginList[2] | translate}}</p>
+                    <a ng-show="newStep.path[2]" ng-click="showCustomizeRegisterModal();">{{ "Customize" | translate }}</a>
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
+<div ng-show="newStep.type.value ==='OTP'" class="OnOffSetting">
+    <span>{{ 'Select a country' | translate }}</span>
+    <select ng-required="newStep.type.value ==='OTP'" id="country" name="country" ng-model="newStep.path[0]"
+            class="form-control select-lg inputTextField"></select>
+</div>
+<div ng-show="newStep.type.value ==='PAYPAL_PAYMENT'"  class="OnOffSetting">
+    <div>{{ 'Paypal client id' | translate }} *&nbsp;&nbsp;<a style="text-decoration: underline" target="_blank" href={{paypalHelpUrl}}><i class="fa fa-question-circle" aria-hidden="true"></i></a></div>
+    <input class="form-control inputTextField" ng-model="newStep.path[0]"/>
+    <br>
+    <div class="row" >
+        <div class="col-lg-6">
+            <span>{{'Currency' | translate}} *</span>
+            <select class="form-control inputTextField" ng-model="newStep.path[2]">
+                <option value="">{{ "Select a currency" | translate }}</option>
+                <option ng-repeat="option in currencyList" value="{{option.value}}">{{option.name + ' (' + option.value+ ')'}}
+                </option>
+            </select>
+        </div>
+        <div class="col-lg-6">
+            <span>{{ 'Amount to Charge End-User' | translate }} *</span>
+            <input class="form-control inputTextField" type="number"  min="0" ng-model="newStep.path[1]" placeholder="{{'Example - 1.99' | translate}}"/>
+        </div>
+    </div>
+</div>
+<div ng-show="newStep.type.value==='VOUCHER'">
+    <br>
+    <div class="row OnOffSetting">
+        <div class="col-lg-6">
+            <span>{{'Character Range' | translate}} {{newStep.path[0]}}</span>
+            <input class="form-control" type="range" name="range" ng-model="newStep.path[0]" min="4"  max="24">
+        </div>
+    </div>
+    <div class="row OnOffSetting">
+        <div class="col-lg-6">
+            <span>{{'Voucher Code Characters' | translate}}</span><br>
+            <input  type="radio" ng-model="newStep.path[1]" value="alphanueric">&nbsp {{ "Alphanumeric" | translate }}
+            <input  type="radio" ng-model="newStep.path[1]" value="aplhabets">&nbsp {{ "Alphabets" | translate }}
+            <input type="radio" ng-model="newStep.path[1]" value="numeric">&nbsp {{ "Numeric" | translate }}
+        </div>
+    </div>
+    <br>
+    <div class="row OnOffSetting">
+        <div class="col-lg-6">
+            <span>{{ 'Max Device Allowed' | translate }}</span>
+            <input class="form-control inputTextField" type="number" min=1 ng-model="newStep.path[2]" placeholder="{{ 'Enter number' | translate }}" />
+        </div>
+    </div>
+    <div class="row OnOffSetting">
+        <div class="col-lg-6">
+            <span>{{ 'Duration' | translate }}</span>
+            <div class="row">
+                <div class="col-md-7 padding-5">
+                    <input id="expirationValue" type="number" min="1" max="87600" class="form-control inputTextField" ng-model="newStep.path[3]" ng-keyup="validateExpiration()"
+                           ng-disabled="newStep.path[4].id==3" placeholder="{{ 'Enter Hours or Days' | translate }}"/>
+                </div>
+                <div class="col-md-5 padding-5">
+                    <select style="border: none;" class="form-control" ng-options="option.interval for option in expiryInterval"
+                            ng-model="newStep.path[4]" ng-change="resetExpiryDays()">
+
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div ng-show="newStep.type.value ==='VIDEO'" class="OnOffSetting mb-20">
+
+    <div class="row">
+        <div class="col-lg-6">
+            <span>{{ 'Choose The Video To Play' | translate }} *</span>
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col-md-6 col-xs-6 smart-form ">
+            <select class="form-control inputTextField" name="mySelect6" id="mySelect6"
+                    ng-options="video.name for video in videoList | orderBy:'name' track by video.id"
+                    ng-model="newStep.path[0]">
+                <option value="">{{ "Please select an option" | translate }}</option>
+            </select>
+
+        </div>
+        <div class="col-md-3 col-xs-4 smart-form " style="padding-left:5%">
+            <button type="button" class="btn  btn-danger" style="min-width: 150px; height: 30px; font-family: Avenir Next Demi;" ng-click="showADeleteVidoWarningModal(newStep.path[0].id)" ng-disabled="newStep.path[0]==null || newStep.path[0]==undefined">{{ "Delete Selected Video" | translate }}</button>
+        </div>
+
+    </div>
+    <br/>
+
+
+
+
+    <h5 class="LevelTitle">
+        {{ "Upload New Video" | translate }}
+    </h5>
+    <div class="input input-file rightZero mb-10">
+			                <span class="button chooseBtn PinkChooseFile">
+			                  <img src="/images/icon-file-upload-org.png" alt="">
+			                  <input ng-click="showVideoModal();" >{{ "Choose a file" | translate}}...
+			                </span>
+    </div>
+</div>
+
+<div ng-show="newStep.type.value ==='DISPLAY_AD'">
+    <div class="OnOffSetting ">
+        <h5>{{ 'Select a display ad image to show' | translate }} *</h5>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-xs-6 smart-form ">
+            <select class="form-control inputTextField" id="displayAdSelected"
+                    ng-options="displayAd.name for displayAd in displayAdList | orderBy:'name' track by displayAd.id"
+                    ng-model="newStep.path[0]">
+                <option value="">{{ "Please select an option" | translate }}</option>
+            </select>
+        </div>
+        <div class="col-md-3 col-xs-4 smart-form " style="padding-left:5%">
+            <button type="button" class="btn  btn-danger" style="min-width: 150px; height: 30px; font-family: Avenir Next Demi;" ng-click="showAdDeleteImageWarningModal(newStep.path[0].id)" ng-disabled="newStep.path[0]==null || newStep.path[0]==undefined">{{ "Delete Selected Ad" | translate }}</button>
+        </div>
+    </div>
+
+
+    <br/>
+    <h5 class="LevelTitle">
+        {{ "Upload Display Ad" | translate }}
+    </h5>
+    <div class="input input-file rightZero mb-10">
+			                <span class="button chooseBtn PinkChooseFile">
+			                  <img src="/images/icon-file-upload-org.png" alt="">
+			                  <input ng-click="showUploadDisplayAdModal();" >{{ "Choose a file" | translate }}...
+			                </span>
+    </div>
+    <div class="hide">
+        <span>{{ 'Target URL for the display ad' | translate }}</span>
+        <input type ="url" class="form-control inputTextField" ng-model="newStep.path[1]"/>
+    </div>
+</div>
+
+</div>
+</div>
+<div class="modal-footer text-right cstmModFooter">
+    <button type="button" class="btn btn-primary" ng-disabled="(newStep.id===null || newStep.id===undefined || newStep.id<1) && newStep.type.value == 'EULA' && isExternalGateway"
+            ng-click="saveStep();">{{'Save' | translate }}</button>
+</div>
+</div>
+</div>
+</div>
+<!--upload video modal -->
+<div class="modal fade" data-keyboard="false" data-backdrop="static"
+     id="videoModal" tabindex="-1" role="dialog"
+     aria-labelledby="#videoModal" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true">x
+                </button>
+                <h4 class="modal-title" id="#videoModalLabel">{{ 'Upload Video' | translate }}</h4>
+            </div>
+            <div class="modal-body" style="min-height: 265px;">
+
+                <div style="color: red;">{{modalVideoErrorMessage}}</div>
+                <div style="padding-bottom: 10px;font-style: italic">{{'Maximum file size is 3mb' | translate}}</div>
+                <div>
+                    <div class="row">
+                        <div class="col-lg-9">
+                            <div class="form-group">
+                                <div> {{ 'Video Name' | translate }}*</div> <input
+                                    class="form-control inputTextField" ng-model="newVideo.name"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div>{{ 'Select .mp4 File' | translate }}</div> <input
+                                id="file-video1" class="file file-loading" type="file"
+                                data-show-upload="false" data-show-caption="true"
+                                accept="video/*" data-max-file-size="3072" data-allowed-file-extensions='["mp4"]'/>
+                        </div>
+                        <div class="col-lg-4">
+                            <div>{{ 'Select .ogv File' | translate }}</div> <input
+                                id="file-video2" class="file file-loading" type="file"
+                                data-show-upload="false" data-show-caption="true"
+                                accept="video/*" data-max-file-size="3072" data-allowed-file-extensions='["ogv"]'/>
+                        </div>
+                        <div class="col-lg-4">
+                            <div>{{ 'Select .webm File' | translate }}</div> <input
+                                id="file-video3" class="file file-loading" type="file"
+                                data-show-upload="false" data-show-caption="true"
+                                accept="video/*" data-max-file-size="3072"  data-allowed-file-extensions='["webm"]'/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="text-align: center">
+                <button ng-click="uploadVideo();"  type="button" class="btn saveBtn">{{'Ok' | translate }}</button>
+                <button  data-dismiss="modal" type="button" class="btn ipbtn cancelBtn">{{ 'Cancel' | translate }}</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+        <!-- /.modal-dialog -->
+    </div>
+</div>
+<div class="modal fade custom-modal-padding" id="displayAdModal" tabindex="-1" aria-labelledby="#displayAdModal"
+     aria-hidden="true" style="display: none;" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog MediumDiolog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true">x
+                </button>
+                <h4 class="modal-title" id="#displayAdModalLabel">{{ 'Upload Display Ad' | translate }}</h4>
+            </div>
+            <div class="modal-body">
+                <div class="smart-form">
+                    <div>
+                        <div style="color: red;">{{modalDisplayAdErrorMessage}}</div>
+                    </div>
+                    <div>
+                        <div class="OnOffSetting">
+                            <span>{{ 'Ad Name' | translate }}*</span>
+                            <input class="form-control inputTextField" ng-model="newDisplayAd.name"/>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <div>{{ 'Select an image (Max size: 2mb)' | translate }}</div> <input
+                                    id="file-display-ad" class="file file-loading" type="file"
+                                    data-show-upload="false" data-show-caption="true"
+                                    accept="image/*" data-max-file-size="2048"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer text-right cstmModFooter">
+                <a ng-click="uploadDisplayAdImage();" class="btn saveBtn">{{ 'OK' | translate }}</a>
+                <button  data-dismiss="modal" type="button" class="btn ipbtn cancelBtn">{{ 'Cancel' | translate }}</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" data-keyboard="false" data-backdrop="static"
+     id="deleteTierModal" tabindex="-1" role="dialog"
+     aria-labelledby="#deleteTierModalLabel" aria-hidden="true"
+     style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x
+                </button>
+                <h4 class="modal-title" id="#deleteTierModalLabel">{{'Delete Step' | translate }}</h4>
+            </div>
+            <div class="modal-body">{{'Are you sure you want to delete selected record?' | translate }}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn saveBtn" data-dismiss="modal"
+                        ng-click="deleteStepRecord();">
+                    <i class="fa fa-trash"></i> {{ 'Delete' | translate }}
+                </button>
+                <button type="button" class="btn ipbtn cancelBtn" data-dismiss="modal">
+                    {{ 'Cancel' | translate }}
+                </button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+        <!-- /.modal-dialog -->
+    </div>
+</div>
+<div class="modal fade" data-keyboard="false" data-backdrop="static" id="previewPortalAAAModal" tabindex="-1" role="dialog"
+     aria-labelledby="#previewPortalAAAModal" aria-hidden="true" style="display: none;">
+
+    <div class="modal-dialog modal-lg modal-dialog-fullscreen" id="previewPortalAAAModalDialog">
+        <div class="modal-content modal-content-fullscreen" id="previewPortalAAADiv">
+            <div class="modal-header" style="background-color:#ffffff">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+                <h4 class="modal-title">{{ "Portal Preview" | translate }}</h4>
+            </div>
+            <iframe id="AAAApreviewFrame" frameborder="0" marginheight="0" marginwidth="0" height="100%" width="100%" style="position: absolute;"></iframe>
+        </div>
+    </div>
+</div>
+<div class="modal fade" data-keyboard="false" data-backdrop="static" id="customizationScriptModal" tabindex="-1" role="dialog"
+     aria-labelledby="#previewPortalModal" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#ffffff">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="discardCustomizationScript()">X</button>
+                <h4 class="modal-title">Portal Customization Scripts</h4>
+            </div>
+            <div class="modal-body" >
+                <textArea rows=10 class="form-control"
+                          ng-model="record.customizationScript"
+                          placeholder="Copy paste any javascript code for portal customization"></textArea>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">
+                    {{ 'Save' | translate }} </button>
+                <button type="button" class="btn btn-default" ng-click="discardCustomizationScript()">{{ 'CANCEL' | translate }}</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="modal fade" data-keyboard="false" data-backdrop="static" id="previewPortalModal" tabindex="-1" role="dialog"
+     aria-labelledby="#previewPortalModal" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-lg modal-dialog-fullscreen" id="previewPortalModalDialog">
+        <div class="modal-content modal-content-fullscreen" id="previewPortalDiv">
+            <div class="modal-header" style="background-color:#ffffff">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+                <h4 class="modal-title">{{ "Portal Preview" | translate }}</h4>
+            </div>
+            <div class="container-fluid">
+                <div class="header-preview-portal">
+                    <div>
+                        <img id="divLogo" src="" style="max-height:155px;max-width:600px;"/>
+                    </div>
+                </div>
+
+                <div class="jumbotron-preview">
+                    <h1 id="h1Headline" style="text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;"></h1>
+                    <p class="lead" id="pText" style="text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;"></p>
+                    <div id="divTier" ></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" data-keyboard="false" data-backdrop="static"
+     id="imageModal" tabindex="-1" role="dialog"
+     aria-labelledby="#imageModal" aria-hidden="true"
+     style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true">x</button>
+                <h4 class="modal-title" id="#imageModalLabel">{{newImage.heading}}</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div style="color: red;">{{modalErrorMessage}}</div>
+                        <div style="padding-bottom: 10px;font-style: italic">{{newImage.specs}}</div>
+                        <form enctype="multipart/form-data" name="imgfile">
+                            <div class="form-group">
+                                <div>{{ 'Image Name' | translate }}*</div> <input
+                                    class="form-control inputTextField" ng-model="newImage.name" />
+                            </div>
+                            <div>{{ 'Select File' | translate }}</div>
+                            <!-- desktop background input file  -->
+                            <div data-ng-show="newImage.type === 'background'">
+                                <input id="file-background" class="file file-loading"
+                                       type="file" data-show-upload="false" data-show-caption="true"
+                                       accept="image/*" data-max-file-size="2048"
+                                        />
+                            </div>
+
+                            <!-- mobile background input file  -->
+                            <div data-ng-show="newImage.type === 'mobile-background'">
+                                <input id="file-mobile-background" class="file file-loading"
+                                       type="file" data-show-upload="false" data-show-caption="true"
+                                       accept="image/*" data-max-file-size="2048"
+                                        />
+                            </div>
+
+                            <!-- logo input file  -->
+                            <div data-ng-show="newImage.type === 'logo'">
+                                <input id="file-logo" class="file file-loading" type="file"
+                                       data-show-upload="false" data-show-caption="true"
+                                       accept="image/*" data-max-file-size="2048"
+                                        />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer text-right cstmModFooter">
+                <button ng-click="uploadImage();" class="btn saveBtn">{{ 'Ok' | translate }}</button>
+                <button  data-dismiss="modal" type="button" class="btn ipbtn cancelBtn">{{ 'Cancel' | translate }}</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+        <!-- /.modal-dialog -->
+    </div>
+</div>
+<div class="modal fade" data-keyboard="false" data-backdrop="static" id="deleteImagesModal" tabindex="-1" role="dialog"
+     aria-labelledby="#deleteImagesModal" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog" id="deleteImagesModalDialog">
+        <div class="modal-content" >
+            <div class="modal-header" style="background-color:#ffffff">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+                <h4 class="modal-title">{{ "Delete Image" | translate }}</h4>
+            </div>
+            <div class="modal-body">
+                {{ 'Are you sure you want to delete this Image? This action cannot be undone.' | translate }}<br/>
+                {{ 'This image will also be removed from any portal that may be using it.' | translate }}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="deleteImage()">
+                    <i class="fa fa-trash"></i> {{ 'DELETE' | translate }} </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" style="height:35px;min-width: 50px;">{{ 'CANCEL' | translate }}</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="modal fade custom-modal-padding" data-keyboard="false" data-backdrop="static"
+     id="customizeRegisterOptionsModal" tabindex="-1" role="dialog"
+     aria-labelledby="#customizeRegisterOptionsModal" aria-hidden="true">
+    <div class="modal-dialog" style="width:100%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    <img src="/images/whiteCross.png" />
+                </button>
+                <h4 class="modal-title">{{ "Customize Registration Options" | translate }}</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row table-responsive PaddingBtNone font-smallThirteen">
+                    <div class="col-sm-12">
+                        <h4>{{ "Add New Field" | translate }}</h4>
+                        <table class="table">
+                            <thead>
+                            <th>{{'Type' | translate }}</th>
+                            <th>{{'Label' | translate }}</th>
+                            <th ng-show="newRegistrationOption.type === 'DROPDOWN' || newRegistrationOption.type === 'CHECKBOX' ">{{'Values' | translate }}</th>
+                            <th ng-show="newRegistrationOption.type === 'INPUT'" >{{'Data Type' | translate }}</th>
+                            <th>{{'Required' | translate }}</th>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <select ng-model="newRegistrationOption.type" class="inputTextField" ng-options="x | translate for x in registrationOptionTypes">
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="input" class="inputTextField" style="width:120px;" ng-model="newRegistrationOption.label" />
+                                </td>
+                                <td ng-show="newRegistrationOption.type === 'DROPDOWN' || newRegistrationOption.type === 'CHECKBOX' ">
+                                    <input type="input" style="width: 200px;" class="inputTextField" ng-model="newRegistrationOption.values" placeholder="Comma separated values" />
+                                </td>
+                                <td ng-show="newRegistrationOption.type === 'INPUT'">
+                                    <select ng-model="newRegistrationOption.dataType" class="inputTextField" ng-options="x | translate for x in registrationOptionDataTypes">
+                                    </select>
+                                </td>
+                                <td>
+                                    <select ng-model="newRegistrationOption.required" class="inputTextField" >
+                                        <option value="true">{{ "Yes" | translate }}</option>
+                                        <option value="false">{{ "No" | translate }}</option>
+                                    </select>
+                                </td>
+                                <!--                                    <td>-->
+                                <!--                                        <select ng-model="newRegistrationOption.displayOption" class="inputTextField" >-->
+                                <!--                                            <option value="always" >Always show</option>-->
+                                <!--                                            <option value="once">One-time per user</option>-->
+                                <!--                                        </select>-->
+                                <!--                                    </td>-->
+                            </tr>
+                            </tbody>
+                        </table>
+                        <button class="btn btn-sm btn-success" ng-click="addNewRegistrationOption()">
+                            {{ "Add" | translate }}
+                        </button>
+                    </div>
+                </div>
+                <div class="row table-responsive PaddingBtNone font-smallThirteen">
+                    <h4>{{ "Current Fields" | translate }}</h4>
+                    <table class="table" >
+                        <thead>
+                        <th>{{'Type' | translate }}</th>
+                        <th>{{'Label' | translate }}</th>
+                        <th>{{'Values' | translate }}</th>
+                        <th>{{'Data Type' | translate }}</th>
+                        <th>{{'Required' | translate }}</th>
+                        <!--                    <th>{{'Display Option' | translate }}</th>-->
+                        <th>{{'Action' | translate }}</th>
+                        </thead>
+                        <tbody ui-sortable="sortableOptions"  ng:model="newStep.customizations">
+                        <tr style="cursor: move;" ng-repeat="option in newStep.customizations">
+                            <td>{{option.type | translate}}</td>
+                            <td ><div style="width:100px;word-wrap: break-word;word-break:break-all;white-space: normal;">{{option.label}}</div></td>
+                            <td ><div style="width:100px;word-wrap: break-word;word-break:break-all;white-space: normal;">{{option.values}}</div></td>
+                            <td>{{option.dataType | translate}}</td>
+                            <td>{{requiredLabels[option.required]}}</td>
+                            <!--                        <td>{{displayOptionLabels[option.displayOption]}}</td>-->
+                            <td >
+                                <button class="btn btn-sm btn-danger" ng-click="deleteRegistrationOption($index)">{{ "Delete" | translate }}</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">
+                    {{ 'Done' | translate }}
+                </button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+        <!-- /.modal-dialog -->
+    </div>
+</div>
+
+
+
+
+<div class="modal fade" data-keyboard="false" data-backdrop="static" id="deleteAdImagesModal" tabindex="-1" role="dialog"
+     aria-labelledby="#deleteAdImagesModal" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog" id="deleteAdImagesModalDialog">
+        <div class="modal-content" >
+            <div class="modal-header" style="background-color:#ffffff">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+                <h4 class="modal-title">{{ "Delete Image" | translate }}</h4>
+            </div>
+            <div class="modal-body">
+                {{ 'Are you sure you want to delete this Image? This action cannot be undone.' | translate }}<br/>
+                {{ 'This image will also be removed from any portal that may be using it.' | translate }}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="deleteAdImage()">
+                    <i class="fa fa-trash"></i> {{ 'Delete' | translate }} </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" style="height:35px;min-width: 40px;">{{ 'Cancel' | translate }}</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" data-keyboard="false" data-backdrop="static" id="deleteVideoModal" tabindex="-1" role="dialog"
+     aria-labelledby="#deleteVideoModal" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog" id="deleteVideoModalDialog">
+        <div class="modal-content" >
+            <div class="modal-header" style="background-color:#ffffff">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+                <h4 class="modal-title">{{ "Delete Video" | translate }}</h4>
+            </div>
+            <div class="modal-body">
+                {{ 'Are you sure you want to delete this Video? This action cannot be undone.' | translate }}<br/>
+                {{ 'This video will also be removed from any portal that may be using it.' | translate }}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="deleteVideo()">
+                    <i class="fa fa-trash"></i> {{ 'Delete' | translate }} </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" style="height:35px;min-width: 40px;">{{ 'Cancel' | translate }}</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+<!-- EULAModal -->
+<div class="modal fade" data-keyboard="false" data-backdrop="static"
+     id="eulaModal" tabindex="-1" role="dialog"
+     aria-labelledby="#imageModal" aria-hidden="true"
+     style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true">
+                    <img src="/images/whiteCross.png" />
+                </button>
+                <h4 class="modal-title" >{{ "EULA" | translate }}</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <div class="form-group">
+                            <label>{{ 'Paste EULA Below' | translate }} *</label>
+                            <textArea rows=5 class="form-control" ng-model="record.text.eula"></textArea>
+                        </div>
+                        <div>
+                            <label>{{'Show Marketing Opt-In Option' | translate}}</label>
+                            <input type="checkbox" ng-checked="record.text.showMarketingOptin" ng-model="record.text.showMarketingOptin"/>
+                        </div>
+
+                        <div class="form-group" ng-show="record.text.showMarketingOptin">
+                            <label>{{'Marketing Opt-In Message' | translate}}</label>
+                            <textArea rows=5 class="form-control" ng-model="record.text.marketingOptinMsg"></textArea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="text-align: center">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">
+                    {{ 'Close' | translate }}</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- modals :end -->
+
+
+<script>
+    populateCountries("country");
+
+    function savePortal() {
+        document.getElementById("saveButton").click();
+    }
+</script>
+</body>
+
+</html>
