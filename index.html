@@ -1014,10 +1014,15 @@
 
 <script>
     populateCountries("country");
+    window.addEventListener('message', function(event){
+	console.log(event.data, event.origin);
+	    const {type} =  event.data;
+	      if (type === 'CALL_FUNCTION') {
+		// Call your function or perform the desired action here
+	        document.getElementById("saveButton").click();
+	      }
+   );
 
-    function savePortal() {
-        document.getElementById("saveButton").click();
-    }
 </script>
 </body>
 
