@@ -51,6 +51,14 @@
         }
 
         window.document.domain=getUrlParam("document.domain","insight.netgear.com");
+	    window.addEventListener('message', function(event){
+	console.log(event.data, event.origin);
+	    const {type} =  event.data;
+	      if (type === 'CALL_FUNCTION') {
+		// Call your function or perform the desired action here
+	        document.getElementById("saveButton").click();
+	      }
+   );
     </script>
     <script src="/lib/jquery/jquery.min.js"></script>
     <script src="/lib/bootstrap/js/bootstrap.min.js"></script>
@@ -1014,14 +1022,7 @@
 
 <script>
     populateCountries("country");
-    window.addEventListener('message', function(event){
-	console.log(event.data, event.origin);
-	    const {type} =  event.data;
-	      if (type === 'CALL_FUNCTION') {
-		// Call your function or perform the desired action here
-	        document.getElementById("saveButton").click();
-	      }
-   });
+    
 
 </script>
 </body>
